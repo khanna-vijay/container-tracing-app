@@ -10,6 +10,9 @@ npm i hbs
 npm i request
 npm i yargs
 npm i fs
+npm i aws-sdk
+npm i aws-param-store
+npm i node-fetch
 
 >>> to restart Nodemon to restart even if .hbs file is saved.. by default it restarts only when .js file is saved
 nodemon app.js -e js,hbs
@@ -25,7 +28,7 @@ const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
 
-
+const webServerPort = process.argv[2] || 80
 //console.log(__dirname)          //prints directory name and file name below
 //console.log(__filename)
 //console.log(path.join(__dirname, 'public'))         //can append .. to go back.. 
@@ -37,30 +40,11 @@ const viewsPath = path.join(__dirname,'templates/views')
 const partialsPath = path.join(__dirname,'templates/partials')
 const geocode = require('./src/utils/geocode')
 const forecast = require('./src/utils/forecast')
-const ParameterStoreDatabaseFile = './src/utils/ParameterStore.json' 
+const awsParamStore = require( 'aws-param-store' )
+ 
 const fs = require('fs')
 const weatherUnits = 'si'
-const weatherLanguage='hi'
-
-/*
-const loadParameterStoreValues = () => {
-    //use try catch to make defensive code, and handle errors
-     try{
-     //console.log('Inside', ParameterStoreDatabaseFile)
-     const dataBuffer = fs.readFileSync(ParameterStoreDatabaseFile)        ///notes.json is the File based DataBase here
-     //console.log('DataBuffer : ', dataBuffer)
-     const dataJSON = dataBuffer.toString()                  //convert raw file-buffer to JSON String
-     return JSON.parse(dataJSON)                              //convert JSON String to JSON Object
- 
-    }catch (error) {
-        console.log('Error') 
-        return[]            //return empty array, in case the Database-file does not exist.. usually for first record situations.
-    }
-}
-
-const Parameters = loadParameterStoreValues()
-
-*/
+const weatherLanguage='en'
 
 
 //Setup Handle Bars Engine and Views location
@@ -110,17 +94,23 @@ app.get('/weather', (req,res) => {
             error: 'You must provide an Address'
         })
     }    
-        const dataBuffer = fs.readFileSync(ParameterStoreDatabaseFile)
-        const dataJSON = dataBuffer.toString()
-        Parameters=JSON.parse(dataJSON)     
+   
+      
+    //Pulling the Secret Key from AWS Parameter Store..
+        // Enter Data using command as 
+          let DarkSkyAPISecret = awsParamStore.getParameterSync( '/Params/keys/DarkSkyAPISecret',{ region: 'us-east-1' } );
+          //console.log(DarkSkyAPISecret.Value)
+          let MapBoxAccessToken = awsParamStore.getParameterSync( '/Params/keys/MapBoxAccessToken',{ region: 'us-east-1' } );
+          let FrontEndDNS = awsParamStore.getParameterSync( '/Params/keys/FrontEndDNS',{ region: 'us-east-1' } );
+
         
-        geocode(req.query.address, Parameters.MapBoxAccessToken, (error, {latitude, longitude, location} = {} ) => {     
+        geocode(req.query.address, MapBoxAccessToken.Value, (error, {latitude, longitude, location} = {} ) => {     
             //{} gives default blank object in case no address is passed 
             if (error){
                 //return console.log(error)
                 return res.send({error})
             }
-            forecast(latitude, longitude, Parameters.DarkSkyAPISecret, weatherUnits, weatherLanguage, (error, forecastData)=> {
+            forecast(latitude, longitude, DarkSkyAPISecret.Value, weatherUnits, weatherLanguage, (error, forecastData)=> {
                 if (error){
                     //return console.log(error)
                     return res.send({error})
@@ -201,8 +191,8 @@ app.get('*', (req,res) => {     //* = match anything not matched so far
 
 
 
-app.listen(8080, () => {
-    console.log(chalk.green.inverse.bold('Message for Admins only on console. Web Server is up and running on port 8080.. check http://localhost:3000'))
+app.listen(webServerPort, () => {
+    console.log(chalk.green.inverse.bold('Message for Admins only on console. Web Server is up and running on port : '+ webServerPort))
 })            //start web server and listen to requests.. CTRL+C to Stop
 
 

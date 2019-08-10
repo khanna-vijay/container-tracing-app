@@ -6,7 +6,7 @@ const geocode = (address, MapBoxAccessToken, callback) => {
     // encode will put %20 instead of Space. and manage special characters. 
     //request ({ url, json: true}, (error, response)=> {
     request ({ url, json: true}, (error, { body })=> {
-        console.log(body)
+       // console.log(body)
         if (error){
             callback('Unable to Connect to MapBox Location Services. Possibly Internet/Wifi Issue', undefined)
         // }else if (response.body.features.length ===0) {

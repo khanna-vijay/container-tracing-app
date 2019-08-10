@@ -1,5 +1,7 @@
 FROM centos
-# This Container will house the node-js weather application
+# This Container will house the node-js weather application. 
+# This is the The Front End micro-service
+
 ## There will be a Envoy Side-Car eventually to demonstrate Tracing feature of Istio
 ## Assuming this container will run on standard x64 hardware. if otherwise, modify the package accordingly. e.g. ARCH='x86'
 ## This Dockerfile is modified copy of the original node image on docker hub : https://github.com/nodejs/docker-node/blob/2524f98f3bcedcfc943a52feb519adf0ee0e3629/10/stretch/Dockerfile
@@ -70,4 +72,4 @@ COPY . .
 #ENTRYPOINT ["app.js"]
 
 CMD [ "node" , "app.js"]
-EXPOSE 8080
+EXPOSE 80
