@@ -10,15 +10,18 @@ metadata:
   name: back-end-pi-array-deployment
   labels:
     app: back-end-pi-array
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: back-end-pi-array
+      version: v1
   template:
     metadata:
       labels:
         app: back-end-pi-array
+        version: v1
     spec:
       containers:
       - name: back-end-pi-array
