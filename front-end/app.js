@@ -8,6 +8,7 @@ npm i path
 npm i handlebars
 npm i hbs
 npm i request
+npm i events
 npm i yargs
 npm i fs
 npm i aws-sdk

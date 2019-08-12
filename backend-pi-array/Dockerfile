@@ -12,7 +12,6 @@ MAINTAINER : Vijay Khanna
 ENV NODE_VERSION 10.16.2
 
 RUN yum update -y
-RUN yum install -y make gcc*
 RUN set -ex \
   && for key in \
     94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
@@ -61,6 +60,7 @@ RUN set -ex \
 
 RUN mkdir /node
 WORKDIR /node
+RUN yum install -y make gcc*
 ## good practice to copy package.json first and initialize, and copy the main code later. 
 COPY package*.json ./
 #RUN mkdir app && chown -R node:node
@@ -73,4 +73,4 @@ COPY . .
 #ENTRYPOINT ["app.js"]
 
 CMD [ "node" , "app.js"]
-EXPOSE 80
+EXPOSE 8083

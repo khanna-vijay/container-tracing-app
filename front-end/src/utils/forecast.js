@@ -1,6 +1,45 @@
 const yargs = require('yargs')
 const chalk = require('chalk')
-const request = require('request')
+var request = require('request');
+var deasync = require("deasync")
+var EventEmitter = require("events").EventEmitter;
+var bodyem = new EventEmitter();
+var sleep = require('sleep');
+var globalresult = {}
+          var piValue = 0
+          var sumArray = 0
+          var randomWait = 0
+          var resdata = 0
+         var  piDigits=500
+         const URLPiArray = 'http://back-end-pi-array-service:8083/pi'  
+
+//var varpiArrayVal = 0
+
+          const axios = require('axios')
+          axios.post(URLPiArray, {"piDigits": piDigits})
+            .then((res) => {
+             // console.log(`statusCode: ${res.statusCode}`)
+              //console.log(res.data)
+              
+            //  console.log('2. server response:' + res.data.unique)
+              this.valid = res.data.unique
+            //  console.log(res.data.piValue)
+            //  console.log(res.data.sumArray)
+            //  console.log(res.data.randomWait)
+              piValue = res.data.piValue
+              sumArray = res.data.sumArray
+              randomWait = res.data.randomWait
+              console.log(piValue, sumArray, randomWait)
+              return res.data.unique;
+              
+              //return res.data;
+            })
+            .catch((error) => {
+              console.error(error)
+            });
+
+//const URLPiArray = 'http://back-end-pi-array-service:8083/pi'           // for Prod
+         //for Cloud9
 
 const forecast = (latitude, longitude, DarkSkyAPISecret, weatherUnits, weatherLanguage, callback) => {
 //const darkSkyNetURLString = 'https://api.darksky.net/forecast/'+DarkSkyAPISecret+'/'+latitude+','+longitude+'?units='+weatherUnits+'&lang='+weatherLanguage
@@ -19,17 +58,50 @@ const url = 'https://api.darksky.net/forecast/'+DarkSkyAPISecret+'/'+latitude+',
             }
        
         else{
-            percentRainChance = (body.currently.precipProbability*100)
+           var  percentRainChance = (body.currently.precipProbability*100)
             percentRainChance = percentRainChance.toFixed(2)        //Limiting the Percent to 2 digits
+            
+         ///-->
+         
+          var piDigits = body.currently.temperature
+          console.log(piDigits)
 
-            callback(undefined, body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain'    
-                /*summary: body.currently.summary,
-                temperature: body.currently.temperature,
-                percentRainChance: percentRainChance,
-                timezone: body.timezone */
+    /*      
+          let options = {
+          url: URLPiArray,
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+          json: {"piDigits": piDigits}
+          };
+    
+          request(options, function(err, res, data) {
+              if (!err && res.statusCode == 200) {
+                    bodyem.data = data;
+                   // console.log(bodyem.data)
+                    var varpiArrayVal = bodyem.data
+                    console.log(varpiArrayVal)
+                    bodyem.emit('update');
+                    
+              }
+           }
+          
+        )
+        
+        */ 
+        //...Just about good
 
-         )
-      
+    /*    
+bodyem.on('update', function () {
+  //  console.log(bodyem.data); 
+})
+*/
+    
+console.log(body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain \n'+' Pi Value : '+piValue +' sumArray '+sumArray+' randomWait '+randomWait)
+
+callback(undefined, body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain. \n \n \n'+' Pi Value : '+piValue +' sumArray : '+sumArray+' randomWait : '+randomWait )
+     
         //Check for Internet Connectivity Errors
         //console.log(response)
         //const data = JSON.parse(response.body)            //Removed this as we are not using json=true for direct JSON format output

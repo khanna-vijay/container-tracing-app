@@ -7,23 +7,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front-end-deployment
+  name: back-end-pi-array-deployment
   labels:
-    app: front-end
+    app: back-end-pi-array
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: front-end
+      app: back-end-pi-array
   template:
     metadata:
       labels:
-        app: front-end
+        app: back-end-pi-array
     spec:
       containers:
-      - name: front-end
+      - name: back-end-pi-array
+        #image: IMAGE_URL
         image: IMAGE_URL
         ports:
-        - containerPort: 80
+        - containerPort: 8083
         
         
