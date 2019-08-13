@@ -54,6 +54,8 @@ kubectl apply -f ~/environment/container-tracing-app/backend-pi-array/service-ba
 ```
 //update the value of field : frontEndDNSURLandPort with the LB-URL or DNS A-Record. If it is a Route53 Entry, then create 'A' record and point to LB.
 
+kubectl get svc front-end-service
+
 nano ~/environment/container-tracing-app/front-end/public/js/app-client-script.js 
 ```
 
