@@ -57,12 +57,18 @@ kubectl apply -f ~/environment/container-tracing-app/backend-motm/service-back-e
 //update the value of field : frontEndDNSURLandPort with the LB-URL or DNS A-Record. If it is a Route53 Entry, then create 'A' record and point to LB.
 
 front_end_lb=$(kubectl get svc front-end-service | grep front-end-service | awk '{print $4}') ; echo $front_end_lb 
-
-
 sed -i "s|LBorDNSURL|$front_end_lb|g"  ~/environment/container-tracing-app/front-end/public/js/app-client-script.js
-
 //To Check frontEndDNSURLandPort value
 head -n3 ~/environment/container-tracing-app/front-end/public/js/app-client-script.js 
+
+
+//backend-service-edit 
+backend_end_motd__lb=$(kubectl get svc back-end-motm-service | grep back-end-motm-service | awk '{print $4}') ; echo $backend_end_motd__lb 
+sed -i "s|MOTMLBURL|$backend_end_motd__lb|g"  ~/environment/container-tracing-app/front-end/src/utils/forecast.js 
+//To Check frontEndDNSURLandPort value
+head -n3 ~/environment/container-tracing-app/front-end/src/utils/forecast.js
+
+
 ```
 
 * **creating Container from Dockerfile, and saving to ECR Repo in own account**
