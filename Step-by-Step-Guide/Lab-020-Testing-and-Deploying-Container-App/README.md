@@ -48,6 +48,7 @@ Optionally Test the above commands from the Worker Nodes. Use SSH Key created ea
 ```
 kubectl apply -f ~/environment/container-tracing-app/front-end/service-front-end.yaml 
 kubectl apply -f ~/environment/container-tracing-app/backend-pi-array/service-back-end-pi-array.yaml 
+kubectl apply -f ~/environment/container-tracing-app/backend-motm/service-back-end-motm.yaml 
 ```
 </br>
 
