@@ -3,7 +3,7 @@ npm init -y
 npm i express
 npm install generate-pi
 npm i sleep
-//Backend Pi Service on Port 8083
+//Backend Pi Service on Port 90
 
 */
 
@@ -11,7 +11,7 @@ const generatePi = require('generate-pi');
 const sleep = require('sleep')
 const express = require('express')
 const app = express()
-var port = process.argv[2] || 8083
+var port = process.argv[2] || 90
 app.use(express.json())
 var piDigits = 11
 
