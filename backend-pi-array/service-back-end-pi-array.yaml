@@ -7,6 +7,6 @@ spec:
     app: back-end-pi-array
   ports:
     - protocol: TCP
-      port: 8083
-      targetPort: 8083
+      port: 90
+      targetPort: 90
       
