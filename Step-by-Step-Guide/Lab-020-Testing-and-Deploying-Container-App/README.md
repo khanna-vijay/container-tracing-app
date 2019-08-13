@@ -135,13 +135,17 @@ docker push $backEndmotmRepoECRURI
 ```
 //replacing the IMAGE_URL with appropriate ECR Repo Locations for Deployment.Yaml Files
 cp ~/environment/container-tracing-app/front-end/deployment-front-end.yaml /tmp/deployment-front-end.yaml
-
 sed -i "s|IMAGE_URL|$frontEndRepoECRURI|g" /tmp/deployment-front-end.yaml
 cat /tmp/deployment-front-end.yaml
 
-cp ~/environment/container-tracing-app/backend-pi-array/deployment-back-end-pi-array.yaml  /tmp/deployment-back-end-pi-array.yaml
 
-sed -i "s|IMAGE_URL|$backEndRepoECRURI|g" /tmp/deployment-back-end-pi-array.yaml
+cp ~/environment/container-tracing-app/back-end-motm/deployment-back-end-motm.yaml  /tmp/deployment-back-end-motm.yaml
+sed -i "s|IMAGE_URL|$backEndmotmRepoECRURI |g" /tmp/deployment-back-end-motm.yaml
+cat /tmp/deployment-back-end-motm.yaml
+
+
+cp ~/environment/container-tracing-app/backend-pi-array/deployment-back-end-pi-array.yaml  /tmp/deployment-back-end-pi-array.yaml
+sed -i "s|IMAGE_URL|$backEndPiArrayRepoECRURI|g" /tmp/deployment-back-end-pi-array.yaml
 cat /tmp/deployment-back-end-pi-array.yaml
 ```
 </br>
@@ -156,12 +160,13 @@ kubectl get svc,deploy,pods
 //
 
 kubectl apply -f /tmp/deployment-front-end.yaml
-
+kubectl apply -f /tmp/deployment-back-end-motm.yaml
 kubectl get svc,deploy,pods
 
 
 //kubectl delete -f /tmp/deployment-front-end.yaml              in case we need to delete the deployments
 //kubectl delete -f /tmp/deployment-back-end-pi-array.yaml 
+//kubectl delete -f /tmp/deployment-back-end-motm.yaml
 ```
 
 </br>
