@@ -180,7 +180,7 @@ cat /tmp/deployment-back-end-motm-v2.yaml
 
 cp ~/environment/container-tracing-app/backend-motm/v3/deployment-back-end-motm-v3.yaml /tmp/deployment-back-end-motm-v3.yaml 
 sed -i "s|IMAGE_URL|$backEndmotmRepoECRURI|g" /tmp/deployment-back-end-motm-v3.yaml 
-cat /tmp/deployment-back-end-motm-v1.yaml 
+cat /tmp/deployment-back-end-motm-v3.yaml 
 
 
 ```
