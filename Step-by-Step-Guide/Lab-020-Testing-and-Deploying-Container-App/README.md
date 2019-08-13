@@ -145,5 +145,6 @@ kubectl get svc,deploy,pods
 
 
 * **check the frontEndDNSURLandPort URL in Browser Window, to check http access**
+curl http://$front_end_lb
 
 
