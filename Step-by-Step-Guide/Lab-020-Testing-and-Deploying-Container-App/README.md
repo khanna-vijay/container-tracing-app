@@ -122,13 +122,37 @@ echo "export backEndmotmRepoECRURI =${backEndmotmRepoECRURI}" >> ~/.bash_profile
 
 //The below command will create Container image from DockerFile. This takes 5-7 minutes. Red text message for gpg key is normal, and not errors. 
 
+
+
+// version-1 motm
+cd ~/environment/container-tracing-app/backend-motm/v1/
 docker build -t back-end-motm:v1 .
-
-
-docker images  | grep back-end-motm    
+docker images  | grep back-end-motm | grep v1
 backEndmotmImageId=$(docker images back-end-motm:v1 | grep back-end-motm | awk '{print $3}') ; echo $backEndmotmImageId   
-docker tag $backEndmotmImageId $backEndmotmRepoECRURI
-docker push $backEndmotmRepoECRURI 
+docker tag $backEndmotmImageId $backEndmotmRepoECRURI:v1
+docker push $backEndmotmRepoECRURI:v1
+
+
+
+// version-2 motm
+cd ~/environment/container-tracing-app/backend-motm/v2/
+docker build -t back-end-motm:v2 .
+docker images  | grep back-end-motm | grep v2   
+backEndmotmImageId=$(docker images back-end-motm:v2 | grep back-end-motm | grep v2  | awk '{print $3}') ; echo $backEndmotmImageId   
+docker tag $backEndmotmImageId $backEndmotmRepoECRURI:v2
+docker push $backEndmotmRepoECRURI:v2
+
+
+// version-3 motm
+cd ~/environment/container-tracing-app/backend-motm/v3/
+docker build -t back-end-motm:v3 .
+docker images  | grep back-end-motm | grep v3   
+backEndmotmImageId=$(docker images back-end-motm:v3 | grep back-end-motm | grep v3  | awk '{print $3}') ; echo $backEndmotmImageId   
+docker tag $backEndmotmImageId $backEndmotmRepoECRURI:v3
+docker push $backEndmotmRepoECRURI:v3
+
+
+
 ```
 </br>
 
@@ -141,14 +165,24 @@ sed -i "s|IMAGE_URL|$frontEndRepoECRURI|g" /tmp/deployment-front-end.yaml
 cat /tmp/deployment-front-end.yaml
 
 
-cp ~/environment/container-tracing-app/back-end-motm/deployment-back-end-motm.yaml  /tmp/deployment-back-end-motm.yaml
-sed -i "s|IMAGE_URL|$backEndmotmRepoECRURI |g" /tmp/deployment-back-end-motm.yaml
-cat /tmp/deployment-back-end-motm.yaml
-
-
 cp ~/environment/container-tracing-app/backend-pi-array/deployment-back-end-pi-array.yaml  /tmp/deployment-back-end-pi-array.yaml
 sed -i "s|IMAGE_URL|$backEndPiArrayRepoECRURI|g" /tmp/deployment-back-end-pi-array.yaml
 cat /tmp/deployment-back-end-pi-array.yaml
+
+cp ~/environment/container-tracing-app/backend-motm/v1/deployment-back-end-motm-v1.yaml /tmp/deployment-back-end-motm-v1.yaml 
+sed -i "s|IMAGE_URL|$backEndmotmRepoECRURI|g" /tmp/deployment-back-end-motm-v1.yaml 
+cat /tmp/deployment-back-end-motm-v1.yaml 
+
+
+cp ~/environment/container-tracing-app/backend-motm/v2/deployment-back-end-motm-v2.yaml /tmp/deployment-back-end-motm-v2.yaml 
+sed -i "s|IMAGE_URL|$backEndmotmRepoECRURI|g" /tmp/deployment-back-end-motm-v2.yaml 
+cat /tmp/deployment-back-end-motm-v2.yaml 
+
+cp ~/environment/container-tracing-app/backend-motm/v3/deployment-back-end-motm-v3.yaml /tmp/deployment-back-end-motm-v3.yaml 
+sed -i "s|IMAGE_URL|$backEndmotmRepoECRURI|g" /tmp/deployment-back-end-motm-v3.yaml 
+cat /tmp/deployment-back-end-motm-v1.yaml 
+
+
 ```
 </br>
 
@@ -162,7 +196,16 @@ kubectl get svc,deploy,pods
 //
 
 kubectl apply -f /tmp/deployment-front-end.yaml
-kubectl apply -f /tmp/deployment-back-end-motm.yaml
+
+
+kubectl apply -f /tmp/deployment-back-end-motm-v1.yaml
+kubectl apply -f /tmp/deployment-back-end-motm-v2.yaml
+kubectl apply -f /tmp/deployment-back-end-motm-v3.yaml
+
+
+
+
+
 kubectl get svc,deploy,pods
 
 
