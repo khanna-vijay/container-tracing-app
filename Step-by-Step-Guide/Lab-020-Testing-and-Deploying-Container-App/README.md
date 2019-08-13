@@ -79,6 +79,11 @@ cd ~/environment/container-tracing-app/front-end/
 aws ecr get-login --region us-east-1 --no-include-email  
 //Copy-Paste the Console output of above command output into the console to login. Starting with "docker login.... Ending with amazonaws.com". You must get "Login Succeeded" message to proceed.
 
+
+ // This will delete existing ECR REPO
+frontEndRepoECR=$(echo $frontEndRepoECRURI | awk -F'/' '{print $2}'); echo $frontEndRepoECR
+aws ecr delete-repository --repository-name $frontEndRepoECR --force
+ 
 //Below command will create ECR Repository
 frontEndRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_front_end | jq -r  '.repository.repositoryUri') 
 echo $frontEndRepoECRURI  
@@ -98,6 +103,11 @@ docker push $frontEndRepoECRURI
 ```
 cd ~/environment/container-tracing-app/backend-pi-array/       
  
+ 
+// This will delete existing ECR REPO
+backEndPiArrayRepoECR=$(echo $backEndPiArrayRepoECRURI  | awk -F'/' '{print $2}') ; echo $backEndPiArrayRepoECR
+aws ecr delete-repository --repository-name $backEndPiArrayRepoECR --force
+
 //Below command will create ECR Repository
 backEndPiArrayRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_back_end_pi_array | jq -r  '.repository.repositoryUri') 
 echo $backEndPiArrayRepoECRURI  
@@ -108,6 +118,7 @@ echo "export backEndPiArrayRepoECRURI=${backEndPiArrayRepoECRURI}" >> ~/.bash_pr
 
 docker build -t back-end-pi-array:v1 .
 docker images  | grep back-end-pi-array   
+
 backEndPiArrayImageId=$(docker images back-end-pi-array:v1 | grep back-end-pi-array    | awk '{print $3}') ; echo $backEndPiArrayImageId   
 docker tag $backEndPiArrayImageId $backEndPiArrayRepoECRURI
 docker push $backEndPiArrayRepoECRURI
@@ -119,6 +130,11 @@ docker push $backEndPiArrayRepoECRURI
 >#**Backend Message of the Moment Service**</br>
 ```
 cd ~/environment/container-tracing-app/backend-motm/   
+ 
+ // This will delete existing ECR REPO
+backEndmotmRepoECR=$(echo $backEndmotmRepoECRURI  | awk -F'/' '{print $2}') ; echo $backEndmotmRepoECR
+aws ecr delete-repository --repository-name $backEndmotmRepoECR --force
+
  
 //Below command will create ECR Repository
 backEndmotmRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_back_end_motm | jq -r  '.repository.repositoryUri') 
