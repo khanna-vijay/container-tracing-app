@@ -9,9 +9,11 @@ var globalresult = {}
           var piValue = 0
           var sumArray = 0
           var randomWait = 0
+          var motm ='Be Happy'
           var resdata = 0
          var  piDigits=500
-         const URLPiArray = 'http://back-end-pi-array-service:8083/pi'  
+         const URLPiArray = 'http://back-end-pi-array-service:90/pi'  
+         var urlMotm = `http://back-end-motm-service:91/motm`
 
 //var varpiArrayVal = 0
 
@@ -37,6 +39,27 @@ var globalresult = {}
             .catch((error) => {
               console.error(error)
             });
+
+
+//to get Message of the Moment
+const axiosgetmotm = require('axios');
+
+
+axiosgetmotm.get(urlMotm)
+  .then(response => {
+   // console.log(response.data.url);
+    console.log(response.data.motm);
+    motm = response.data.motm
+    
+  })
+  .catch(error => {
+    console.log(error);
+  });
+  
+  
+
+
+
 
 //const URLPiArray = 'http://back-end-pi-array-service:8083/pi'           // for Prod
          //for Cloud9
@@ -98,9 +121,9 @@ bodyem.on('update', function () {
 })
 */
     
-console.log(body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain \n'+' Pi Value : '+piValue +' sumArray '+sumArray+' randomWait '+randomWait)
+console.log(body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain \n'+'Message of the Moment : '+motm+ '\n Pi Value : '+piValue +' sumArray '+sumArray+' randomWait '+randomWait)
 
-callback(undefined, body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain. \n \n \n'+' Pi Value : '+piValue +' sumArray : '+sumArray+' randomWait : '+randomWait )
+callback(undefined, body.currently.summary+' It is Currently '+body.currently.temperature+' Celcius. There is a '+ percentRainChance+' Percent Chance of rain. \n ' +'Message of the Moment : '+ motm + ' sumArray : '+sumArray+' randomWait : '+randomWait +' \n Pi Value : '+piValue)
      
         //Check for Internet Connectivity Errors
         //console.log(response)
