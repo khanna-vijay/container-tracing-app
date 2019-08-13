@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: back-end-motm
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 91
