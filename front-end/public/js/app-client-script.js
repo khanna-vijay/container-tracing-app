@@ -1,4 +1,4 @@
-const frontEndDNSURLandPort = ''
+const frontEndDNSURLandPort = 'http://LBorDNSURL'
 
 // Specify the Front End Service Endpoint URL / Load Balancer URL 
 //e.g. http://front-end.domain.com      .. if port 80, then leave as it is, else use port http://front-end.poc-demo.work:8080
