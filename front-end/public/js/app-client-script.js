@@ -1,9 +1,10 @@
-console.log('Client Side JavaScript file is loaded')
+const frontEndDNSURLandPort = ''
+
 // Specify the Front End Service Endpoint URL / Load Balancer URL 
-//e.g. http://front-end.poc-demo.work      .. if port 80, then leave as it is, else use port http://front-end.poc-demo.work:8080
+//e.g. http://front-end.domain.com      .. if port 80, then leave as it is, else use port http://front-end.poc-demo.work:8080
 
-const frontEndDNSURLandPort = 'http://front-end.poc-demo.work'
 
+console.log('Client Side JavaScript file is loaded')
 const weatherForm = document.querySelector('form')
 const search = document.querySelector('input')
 const messageOne = document.querySelector('#message-One')
@@ -19,17 +20,9 @@ weatherForm.addEventListener('submit', (event) =>{
     const location = search.value
     messageOne.textContent = 'Searching... Please Wait......'
     messageTwo.textContent = '.......'
-  //  const onevar = document.currentScript.getAttribute('onevar')
-
-
-    
-    console.log('https://afe71dc4f1014ab0bc5898277eb4513d.vfs.cloud9.us-east-1.amazonaws.com/weather?address='+location)
-  //fetch('https://afe71dc4f1014ab0bc5898277eb4513d.vfs.cloud9.us-east-1.amazonaws.com/weather?address='+location).then((response) => {
     
   fetch(frontEndDNSURLandPort+'/weather?address='+location).then((response) => {
-    
-        
-             //fetch('https://localhost:8080/weather?address='+location).then((response) => {
+
         response.json().then((data) => {
             if (data.error){
                 console.log(data.error)
