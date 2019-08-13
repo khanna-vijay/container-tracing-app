@@ -3,6 +3,7 @@ In this Lab, we will deploy and test the application manually step by step. This
 
 * **Clone Repo**
 ```
+cd ~/environment
 git clone https://github.com/vijay-khanna/container-tracing-app
 cd ~/environment/container-tracing-app/
 ```
