@@ -112,7 +112,8 @@ Search for **"nodegroup"** Security Groups and empty them and delete them manual
 
 
 >Role for Worker Nodes
-Open IAM Console, Search for **"NodeInstanceRole"**, and delete the appropriate Role which was used to allow SSM access.
+* Open IAM Console, Search for **"NodeInstanceRole"**, and delete the appropriate Role which was used to allow SSM access.
+* Delete the Admin Role "Admin-Role_for_Cloud9_Instance"
 
 
 </br>
