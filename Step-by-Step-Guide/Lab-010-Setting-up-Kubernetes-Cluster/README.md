@@ -83,7 +83,10 @@ aws sts get-caller-identity
 ```
 
 * **Generating ssh key to login to the kubernetes worker node:**
-Press enter three times to accept defaults. 
+</br>
+
+**Press enter three times to accept defaults. In case you are using existing key, you can choose to overwrite the same name**
+</br>
 ```
 ssh-keygen
 ```
@@ -109,8 +112,11 @@ version.Info{BuiltAt:"", GitCommit:"", GitTag:"0.3.1"}</br>
 eksctl version
 ```
 Modify the parameters if required to change the Region, Zone, Worker Node Instance Type, Max/Min Nodes, Public key to ssh to Nodes.
-```
+</br>
 
+**Deploying the EKS Cluster**
+This will take about 10 minutes. 
+```
 eksctl create cluster --version=1.13 --name=$EKS_CLUSTER_NAME --nodes=2 --node-ami=auto --region=${AWS_REGION} --zones=${AWS_REGION}a,${AWS_REGION}b  --ssh-public-key $EKS_WORKER_NODE_KEY --nodes-min 2 --nodes-max 3 --node-type m5.large --node-volume-size 50
 ```
 
