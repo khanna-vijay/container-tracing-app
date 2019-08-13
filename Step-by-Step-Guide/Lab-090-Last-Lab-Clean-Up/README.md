@@ -41,11 +41,12 @@ helm delete --purge istio-init
 * **Removing all Deployments and Services**
 ```
 //Deleting the key front-end and back-end services and deployments.
-kubectl delete -f /tmp/deployment-back-end-pi-array.yaml
-kubectl delete -f /tmp/deployment-front-end.yaml
+kubectl delete -f /tmp/deployment-front-end.yaml             
+kubectl delete -f /tmp/deployment-back-end-pi-array.yaml 
+kubectl delete -f /tmp/deployment-back-end-motm.yaml
 
 kubectl delete -f ~/environment/container-tracing-app/front-end/service-front-end.yaml 
-
+kubectl delete -f ~/environment/container-tracing-app/backend-motm/service-back-end-motm.yaml 
 kubectl delete -f ~/environment/container-tracing-app/backend-pi-array/service-back-end-pi-array.yaml 
 
 
@@ -126,8 +127,13 @@ frontEndRepoECR=$(echo $frontEndRepoECRURI | awk -F'/' '{print $2}'); echo $fron
 aws ecr delete-repository --repository-name $frontEndRepoECR --force
 
 
-backEndRepoECR=$(echo $backEndRepoECRURI | awk -F'/' '{print $2}') ; echo $backEndRepoECR
-aws ecr delete-repository --repository-name $backEndRepoECR --force
+
+backEndmotmRepoECR=$(echo $backEndmotmRepoECRURI  | awk -F'/' '{print $2}') ; echo $backEndmotmRepoECR
+aws ecr delete-repository --repository-name $backEndmotmRepoECR --force
+
+
+backEndPiArrayRepoECR=$(echo $backEndPiArrayRepoECRURI  | awk -F'/' '{print $2}') ; echo $backEndPiArrayRepoECR
+aws ecr delete-repository --repository-name $backEndPiArrayRepoECR --force
 
 
 eksctl delete cluster --name=$EKS_CLUSTER_NAME
