@@ -7,7 +7,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-back-end-motm
+  name: back-end-motm-deployment
   labels:
     app: back-end-motm
     version: v1
