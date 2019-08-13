@@ -25,7 +25,6 @@ spec:
     spec:
       containers:
       - name: back-end-pi-array
-        #image: IMAGE_URL
         image: IMAGE_URL
         ports:
         - containerPort: 8083
