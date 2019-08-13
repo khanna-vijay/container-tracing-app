@@ -111,7 +111,7 @@ docker push $backEndPiArrayRepoECRURI
 
 >#**Backend Message of the Moment Service**</br>
 ```
-cd ~/environment/container-tracing-app/back-end-motm/       
+cd ~/environment/container-tracing-app/backend-motm/   
  
 //Below command will create ECR Repository
 backEndmotmRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_back_end_motm | jq -r  '.repository.repositoryUri') 
