@@ -195,7 +195,7 @@ kubectl apply -f /tmp/deployment-back-end-pi-array.yaml
 kubectl get svc,deploy,pods
 //
 
-kubectl apply -f /tmp/deployment-front-end.yaml
+kubectl apply -f /tmp/deployment-back-end-pi-array.yaml
 
 
 kubectl apply -f /tmp/deployment-back-end-motm-v1.yaml
