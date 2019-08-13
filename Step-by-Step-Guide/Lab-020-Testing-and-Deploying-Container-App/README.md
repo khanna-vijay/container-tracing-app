@@ -165,9 +165,17 @@ kubectl apply -f /tmp/deployment-back-end-motm.yaml
 kubectl get svc,deploy,pods
 
 
+
+// * * * * * Not to be used in normal flow, only for some changes/Testing purpose Only ***
 //kubectl delete -f /tmp/deployment-front-end.yaml              in case we need to delete the deployments
 //kubectl delete -f /tmp/deployment-back-end-pi-array.yaml 
 //kubectl delete -f /tmp/deployment-back-end-motm.yaml
+
+//kubectl delete -f ~/environment/container-tracing-app/front-end/service-front-end.yaml 
+//kubectl delete -f ~/environment/container-tracing-app/backend-motm/service-back-end-motm.yaml 
+//kubectl delete -f ~/environment/container-tracing-app/backend-pi-array/service-back-end-pi-array.yaml 
+
+kubectl get svc,deploy,pods
 ```
 
 </br>
