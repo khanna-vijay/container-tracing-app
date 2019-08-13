@@ -80,32 +80,56 @@ echo $frontEndRepoECRURI
 docker build -t front-end:v1 .      
 docker images  | grep front-end    
 frontEndImageId=$(docker images front-end:v1 | grep front-end | awk '{print $3}') ; echo $frontEndImageId   
-
+echo "export frontEndRepoECRURI=${frontEndRepoECRURI}" >> ~/.bash_profile
 docker tag $frontEndImageId $frontEndRepoECRURI 
 docker push $frontEndRepoECRURI  
 ```
 </br>
 
->#**Backend Service**</br>
+>#**Backend Pi-Array Service**</br>
 ```
 cd ~/environment/container-tracing-app/backend-pi-array/       
  
 //Below command will create ECR Repository
-backEndRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_back_end | jq -r  '.repository.repositoryUri') 
-echo $backEndRepoECRURI  
+backEndPiArrayRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_back_end_pi_array | jq -r  '.repository.repositoryUri') 
+echo $backEndPiArrayRepoECRURI  
 
-echo "export backEndRepoECRURI=${backEndRepoECRURI}" >> ~/.bash_profile
-echo "export frontEndRepoECRURI=${frontEndRepoECRURI}" >> ~/.bash_profile
+echo "export backEndPiArrayRepoECRURI=${backEndPiArrayRepoECRURI}" >> ~/.bash_profile
 
 //The below command will create Container image from DockerFile. This takes 5-7 minutes. Red text message for gpg key is normal, and not errors. 
 
-docker build -t back-end:v1 .
-docker images  | grep back-end    
-backEndImageId=$(docker images back-end:v1 | grep back-end | awk '{print $3}') ; echo $backEndImageId   
-docker tag $backEndImageId $backEndRepoECRURI  
-docker push $backEndRepoECRURI 
+docker build -t back-end-pi-array:v1 .
+docker images  | grep back-end-pi-array   
+backEndPiArrayImageId=$(docker images back-end-pi-array:v1 | grep back-end-pi-array    | awk '{print $3}') ; echo $backEndPiArrayImageId   
+docker tag $backEndPiArrayImageId $backEndPiArrayRepoECRURI
+docker push $backEndPiArrayRepoECRURI
 ```
 </br>
+
+</br>
+
+>#**Backend Message of the Moment Service**</br>
+```
+cd ~/environment/container-tracing-app/back-end-motm/       
+ 
+//Below command will create ECR Repository
+backEndmotmRepoECRURI=$(aws ecr create-repository --repository-name ${EKS_CLUSTER_NAME,,}_back_end_motm | jq -r  '.repository.repositoryUri') 
+echo $backEndmotmRepoECRURI  
+
+echo "export backEndmotmRepoECRURI =${backEndmotmRepoECRURI}" >> ~/.bash_profile
+
+//The below command will create Container image from DockerFile. This takes 5-7 minutes. Red text message for gpg key is normal, and not errors. 
+
+docker build -t back-end-motm:v1 .
+
+
+docker images  | grep back-end-motm    
+backEndmotmImageId=$(docker images back-end-motm:v1 | grep back-end-motm | awk '{print $3}') ; echo $backEndmotmImageId   
+docker tag $backEndmotmImageId $backEndmotmRepoECRURI
+docker push $backEndmotmRepoECRURI 
+```
+</br>
+
 
 * **Updating deployment files with ECR Link to Container Images**
 ```
