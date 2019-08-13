@@ -177,6 +177,22 @@ kubectl get svc,deploy,pods
 //kubectl delete -f ~/environment/container-tracing-app/backend-pi-array/service-back-end-pi-array.yaml 
 
 kubectl get svc,deploy,pods
+
+
+
+
+//frontEndRepoECR=$(echo $frontEndRepoECRURI | awk -F'/' '{print $2}'); echo $frontEndRepoECR
+//aws ecr delete-repository --repository-name $frontEndRepoECR --force
+
+
+
+//backEndmotmRepoECR=$(echo $backEndmotmRepoECRURI  | awk -F'/' '{print $2}') ; echo $backEndmotmRepoECR
+//aws ecr delete-repository --repository-name $backEndmotmRepoECR --force
+
+
+//backEndPiArrayRepoECR=$(echo $backEndPiArrayRepoECRURI  | awk -F'/' '{print $2}') ; echo $backEndPiArrayRepoECR
+//aws ecr delete-repository --repository-name $backEndPiArrayRepoECR --force
+
 ```
 
 </br>
