@@ -128,6 +128,7 @@ cat /tmp/deployment-back-end-pi-array.yaml
 kubectl apply -f /tmp/deployment-back-end-pi-array.yaml
 //wait few seconds, after deploying backend. and then deploy front end..else there might be errors to fetch from backend.
 //
+kubectl get svc,deploy,pods
 //
 
 kubectl apply -f /tmp/deployment-front-end.yaml
